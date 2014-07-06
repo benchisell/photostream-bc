@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<h1>Scraper</h1>
+
+
+<div class="well">
+    <form class="form-horizontal" action="" method="post" name="post">
+        {{form.hidden_tag()}}
+        <div class="row row-post">
+            <div class="col-md-6">
+                <!-- <label class="control-label" for="post">{{ _('Description:') }}</label> -->
+                <div class="controls">
+                    {{ form.url(size = 30, maxlength = 140, placeholder="URL", class = "form-control") }}
+                    {% for error in form.errors.url %}
+                        <span class="help-inline">[{{error}}]</span><br>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="controls">
+                <input class="btn btn-primary" type="submit" value="{{ _('Scrape!') }}">
+            </div>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}
+
+

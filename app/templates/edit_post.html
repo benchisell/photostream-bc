@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="well">
+    <form class="form-horizontal" action="" method="post" name="post">
+        {{form.hidden_tag()}}
+        <div class="row row-post">
+            <div class="col-md-6">
+                <!-- <label class="control-label" for="post">{{ _('Description:') }}</label> -->
+                <div class="controls">
+                    {{ form.post(size = 30, maxlength = 140, placeholder="Description", class = "form-control") }}
+                    {% for error in form.errors.post %}
+                        <span class="help-inline">[{{error}}]</span><br>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <!-- <label class="control-label" for="post">{{ _('Image URL:') }}</label> -->
+                <div class="controls">
+                    {{ form.image(size = 30, maxlength = 140, placeholder="Image URL", class = "form-control") }}
+                    {% for error in form.errors.post %}
+                        <span class="help-inline">[{{error}}]</span><br>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <img src="{{form.image.data}}">
+        <!-- LINKS --> 
+        <h2>Post Links</h2>
+        <div class = "row row-post">    
+            <div class = "col-md-3">
+                <div>
+                    {{ form.link1(size = 30, maxlength = 140, placeholder="Link 1 URL", class = "form-control") }}
+                    {{ form.link1_text(size = 30, maxlength = 140, placeholder="Link 1 Description", class = "form-control") }}
+                </div>
+            </div>
+            <div class = "col-md-3">
+                <div>
+                    {{ form.link2(size = 30, maxlength = 140, placeholder="Link 2 URL", class = "form-control") }}
+                    {{ form.link2_text(size = 30, maxlength = 140, placeholder="Link 2 Description", class = "form-control") }}
+                </div>
+            </div>
+            <div class = "col-md-3">
+                <div>
+                    {{ form.link3(size = 30, maxlength = 140, placeholder="Link 3 URL", class = "form-control") }}
+                    {{ form.link3_text(size = 30, maxlength = 140, placeholder="Link 3 Description", class = "form-control") }}
+                </div>
+            </div>
+            <div class = "col-md-3">
+                <div>
+                    {{ form.link4(size = 30, maxlength = 140, placeholder="Link 4 URL", class = "form-control") }}
+                    {{ form.link4_text(size = 30, maxlength = 140, placeholder="Link 4 Description", class = "form-control") }}
+                </div>
+            </div>
+            <div class = "col-md-3">
+                <div>
+                    {{ form.link5(size = 30, maxlength = 140, placeholder="Link 5 URL", class = "form-control") }}
+                    {{ form.link5_text(size = 30, maxlength = 140, placeholder="Link 5 Description", class = "form-control") }}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="control-group">
+            <div class="controls">
+                <input class="btn btn-primary" type="submit" value="{{ _('Post!') }}">
+            </div>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}

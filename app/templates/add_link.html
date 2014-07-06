@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="post-body">
+    <div class="col-sm-7">
+        <h3>{{post.body}}</h3>
+    </div>
+    <div class="col-sm-3">
+        <h3>Image ID: {{post.id}}</h3>
+    </div>
+    <div class="col-sm-2">
+        <h3>by <a href="{{ url_for('user', nickname = post.author.nickname) }}">{{post.author.nickname}}</a></h3> 
+    </div>
+</div>
+<div class="col-md-12">
+	<img src="{{post.image}}" class="img-responsive">
+	<div class="col-md-12">
+		<h3>Links</h3>
+		{% for link in links %}
+			<a href="{{link.url}}">{{link.body}}</a> |
+		{% endfor %}
+	</div>		
+	<div class="well">
+    <form class="form-horizontal" action="" method="post" name="post">
+        {{form.hidden_tag()}}
+        <div class="control-group{% if form.errors.post %} error{% endif %}">
+            <label class="control-label" for="post">{{ _('URL:') }}</label>
+            <div class="controls">
+                {{ form.url(size = 30, maxlength = 140) }}
+                {% for error in form.errors.post %}
+                    <span class="help-inline">[{{error}}]</span><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="control-group{% if form.errors.post %} error{% endif %}">
+            <label class="control-label" for="post">{{ _('Description:') }}</label>
+            <div class="controls">
+                {{ form.body(size = 30, maxlength = 140) }}
+                {% for error in form.errors.post %}
+                    <span class="help-inline">[{{error}}]</span><br>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="controls">
+                <input class="btn btn-primary" type="submit" value="{{ _('Link') }}">
+            </div>
+        </div>
+    </form>
+	</div>
+</div>
+
+
+{% endblock %}
+

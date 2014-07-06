@@ -1,0 +1,36 @@
+from bs4 import BeautifulSoup
+from app import db
+import urllib
+
+"""  garconjon  """
+"http://www.garconjon.com/"
+
+def garconjon_scraper(url):
+	f = urllib.urlopen(url)
+	html = f.read()
+	soup = BeautifulSoup(html)
+
+	for tag in soup.findAll('a', attrs={"imageanchor" : "1"}): 
+   		image = tag['href']
+   		print(image)
+
+
+
+
+"""backyard bill
+
+def backyard_bill_scraper(url):
+	f = urllib.urlopen(url)
+	html = f.read()
+	soup = BeautifulSoup(html)
+
+	for tag in soup.findAll('img', alt=True): 
+	    print(tag['src'])
+
+backyard_bill_scraper("http://www.backyardbill.com/pictures/eric-degenhard-larchmont-ny/")
+
+"""
+
+
+
+
