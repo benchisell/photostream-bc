@@ -23,13 +23,15 @@
                     {% if post.link3 != ""%} | <a href="{{post.link3}}" target="_blank">{{post.link3_text}}</a> {% endif %}
                     {% if post.link4 != ""%} | <a href="{{post.link4}}" target="_blank">{{post.link4_text}}</a> {% endif %}
                     {% if post.link5 != ""%} | <a href="{{post.link5}}" target="_blank">{{post.link5_text}}</a> {% endif %}
+                    {% if g.user.id %}
+                        | <a href="{{url_for('post_email', postid = post.id)}}"><i>Email Me</i></a>
+                    {% endif %}
                 </ul>
             </div>
             {% endif %}
         </div>
-
         {% if post.author.id == g.user.id %}
-        <ul><a href="{{url_for('delete', id = post.id)}}">{{ _('Delete') }}</a> | <a href="{{url_for('edit_post', postid = post.id)}}">{{ _('Edit') }}</a></ul>
+            <ul><a href="{{url_for('delete', id = post.id)}}">{{ _('Delete') }}</a> | <a href="{{url_for('edit_post', postid = post.id)}}">{{ _('Edit') }}</a></ul>
         {% endif %}
     
 </div>

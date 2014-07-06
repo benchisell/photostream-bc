@@ -1,8 +1,11 @@
 from bs4 import BeautifulSoup
-from app import db
 import urllib
+import io
 
-"""  garconjon  """
+"""  garconjon  
+garconjon_scraper("http://www.garconjon.com/")
+
+"""
 "http://www.garconjon.com/"
 
 def garconjon_scraper(url):
@@ -10,9 +13,11 @@ def garconjon_scraper(url):
 	html = f.read()
 	soup = BeautifulSoup(html)
 
-	for tag in soup.findAll('a', attrs={"imageanchor" : "1"}): 
-   		image = tag['href']
-   		print(image)
+	with io.open('log.txt', 'a', encoding='utf8') as logfile:
+		for tag in soup.findAll('a', attrs={"imageanchor" : "1"}): 
+	   		image = tag['href']
+	   		print(image)
+	   		logfile.write(u"%s\n" % (image))
 
 
 

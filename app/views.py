@@ -6,7 +6,7 @@ from app import app, db, lm, oid, babel
 from forms import LoginForm, EditForm, PostForm, SearchForm, AddLink, Scraper, EditPostForm
 from models import User, ROLE_USER, ROLE_ADMIN, Post, Link
 from datetime import datetime
-from emails import follower_notification
+from emails import follower_notification, outfit_email
 from guess_language import guessLanguage
 from translate import microsoft_translate
 from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS, LANGUAGES, DATABASE_QUERY_TIMEOUT, WHOOSH_ENABLED
@@ -110,9 +110,11 @@ def user(nickname, page = 1):
         flash(gettext('User %(nickname)s not found.', nickname = nickname))
         return redirect(url_for('index'))
     posts = user.sorted_posts().paginate(page, POSTS_PER_PAGE, False)
+    count_posts = Post.query.filter_by(author = user).count()
     return render_template('user.html',
         user = user,
-        posts = posts)
+        posts = posts,
+        count_posts = count_posts)
 
 @app.route('/edit', methods = ['GET', 'POST'])
 @login_required
@@ -230,30 +232,17 @@ def new_post():
     return render_template('new_post.html',
         form = form)
 
-"""@app.route('/add_link/<postid>', methods = ['GET', 'POST'])
-@login_required
-def add_link(postid):
-    form = AddLink()
-    post = Post.query.filter_by(id = postid).first()
-    links = Post.post_links(post)
-    print post
-    print links
-    if form.validate_on_submit():
-        l = Link(url = form.url.data, body = form.body.data, post_id = post.id)
-        db.session.add(l)
-        db.session.commit()
-        flash('Your link is now live!')
-        return redirect(url_for('add_link', postid = post.id))
-    return render_template('add_link.html',
-        form = form,
-        post = post,
-        links = links)"""
-
 @app.route('/edit_post/<postid>', methods = ['GET', 'POST'])
 @login_required
 def edit_post(postid):
     form = EditPostForm()
     post = Post.query.filter_by(id = postid).first()
+    if post == None:
+        flash('Post not found.')
+        return redirect(url_for('index'))
+    if post.author.id != g.user.id:
+        flash('You cannot edit this post.')
+        return redirect(url_for('index'))
     if form.validate_on_submit():
         post.body = form.post.data
         post.timestamp = datetime.utcnow()
@@ -306,3 +295,13 @@ def scraper():
                 db.session.commit()
     return render_template('scraper.html',
         form = form)
+
+
+@app.route('/post_email/<postid>')
+@login_required
+def post_email(postid):
+    post = Post.query.filter_by(id = postid).first()
+    user = User.query.filter_by(nickname = g.user.nickname).first()
+    outfit_email(post, user)
+    return redirect(url_for('index'))
+

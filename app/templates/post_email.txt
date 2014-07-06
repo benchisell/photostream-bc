@@ -1,0 +1,3 @@
+{{ _('Dear %(nickname)s,', nickname = user.nickname) }}
+
+We have sent you details of the outfit you requested

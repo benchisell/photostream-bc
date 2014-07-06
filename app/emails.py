@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, flash
 from flask.ext.mail import Message
 from app import mail
 from decorators import async
@@ -25,4 +25,13 @@ def follower_notification(followed, follower):
             user = followed, follower = follower),
         render_template("follower_email.html", 
             user = followed, follower = follower))
+
+def outfit_email(Post, user):
+    send_email("Here is the outfit you requested!",
+        ADMINS[0],
+        [user.email],
+        render_template("post_email.txt", user = user),
+        render_template("post_email.html", user = user))
+    flash('We have emailed you the outfit')
+    print Post, user.email, ADMINS[0]
         
