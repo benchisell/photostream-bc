@@ -10,22 +10,39 @@
         </div>
         {% endautoescape %}
         <div class="post-image">
-            <img src="{{post.image}}" class="img-responsive" alt="{{post.body}}">
+            <img src="{{post.image}}" alt="{{post.body}}" class="image-responsive">
+            <span class="image-overlay">
+                    {% if post.link1 != None%}
+                    <div class="col-sm-12">
+                        <ul>
+                            {% if g.user.id %}
+                                <h2><a href="{{url_for('post_email', postid = post.id)}}" id="email-button">CU</a></h2>
+                            {% endif %}
+                            <h2>Shop the Image:  </h2>
+                            <a href="{{post.link1}}" target="_blank">{{post.link1_text}}</a>
+                            {% if post.link2 != ""%} | <a href="{{post.link2}}" target="_blank">{{post.link2_text}}</a> {% endif %}
+                            {% if post.link3 != ""%} | <a href="{{post.link3}}" target="_blank">{{post.link3_text}}</a> {% endif %}
+                            {% if post.link4 != ""%} | <a href="{{post.link4}}" target="_blank">{{post.link4_text}}</a> {% endif %}
+                            {% if post.link5 != ""%} | <a href="{{post.link5}}" target="_blank">{{post.link5_text}}</a> {% endif %}
+                        </ul>
+                    </div>
+                    {% endif %}
+            </span>
         </div>
         
         <div class="post-links">
             {% if post.link1 != None%}
             <div class="col-sm-12">
                 <ul>
+                    {% if g.user.id %}
+                        <a href="{{url_for('post_email', postid = post.id)}}" id="email-button">CU</a>
+                    {% endif %}
                     <strong>Shop the Image:  </strong>
                     <a href="{{post.link1}}" target="_blank">{{post.link1_text}}</a>
                     {% if post.link2 != ""%} | <a href="{{post.link2}}" target="_blank">{{post.link2_text}}</a> {% endif %}
                     {% if post.link3 != ""%} | <a href="{{post.link3}}" target="_blank">{{post.link3_text}}</a> {% endif %}
                     {% if post.link4 != ""%} | <a href="{{post.link4}}" target="_blank">{{post.link4_text}}</a> {% endif %}
                     {% if post.link5 != ""%} | <a href="{{post.link5}}" target="_blank">{{post.link5_text}}</a> {% endif %}
-                    {% if g.user.id %}
-                        | <a href="{{url_for('post_email', postid = post.id)}}"><i>Email Me</i></a>
-                    {% endif %}
                 </ul>
             </div>
             {% endif %}
@@ -36,30 +53,3 @@
     
 </div>
 <hr>
-
-<!---
-<table class="table table-hover">
-    <tr>
-        <td width="70px"><a href="{{url_for('user', nickname = post.author.nickname)}}"><img src="{{post.author.avatar(70)}}" /></a></td>
-        <td>
-            {% autoescape false %}
-            <p>{{ _('%(nickname)s said %(when)s:', nickname = '<a href="%s">%s</a>' % (url_for('user', nickname = post.author.nickname), post.author.nickname), when = momentjs(post.timestamp).fromNow()) }}</p>
-            {% endautoescape %}
-            <p><strong><span id="post{{post.id}}">{{post.body}}</span></strong></p>
-            <img src="{{post.image}}">
-
-            {% if post.language != None and post.language != '' and post.language != g.locale %}
-            <div>
-                <span id="translation{{post.id}}">
-                    <a href="javascript:translate('{{post.language}}', '{{g.locale}}', '#post{{post.id}}', '#translation{{post.id}}', '#loading{{post.id}}');">{{ _('Translate') }}</a>
-                </span>
-                <img id="loading{{post.id}}" style="display: none" src="/static/img/loading.gif">
-            </div>
-            {% endif %}
-            {% if post.author.id == g.user.id %}
-            <div><a href="{{ url_for('delete', id = post.id) }}">{{ _('Delete') }}</a></div>
-            {% endif %}
-        </td>
-    </tr>
-</table>
--->

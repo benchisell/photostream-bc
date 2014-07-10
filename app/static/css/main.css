@@ -95,6 +95,7 @@ hr {
 }
 
 /* Add New Posts */
+
 .row-post {
 	margin: 0px;
 	margin-bottom: 25px;
@@ -118,14 +119,52 @@ hr {
 	margin: 0 auto;
 	max-width: 800px;
 	margin-bottom: 0px;
-
 	background-color: white;
-	border-radius: 3px;
 }
 
-.post-image img {
+.post-body {
 	width: 100%;
+	font-size: 12px;
+	float: left;
+	padding: 5px;
+	margin: 0px;
+	display: block;
 }
+
+.post-image {
+	position: relative;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	display: inline-block;
+}
+
+.post-image > img {
+	width: 100%;
+	left:0;
+	top:0;
+	display: block;
+}
+
+.post-image > .image-overlay {
+	margin: 0 auto;
+	left: 0;
+	top: 0px;
+	text-align: center;
+	width: 100%;
+	display: none;
+	position: absolute;
+	height:100%;
+}
+
+.post-image img:hover + .image-overlay {
+	display: block;
+	background-color: gray;
+	opacity: 0.5;
+	z-index: 2;
+}
+
 
 .post-links {
 	width: 100%;	
@@ -152,20 +191,13 @@ hr {
 	margin: 0px;
 }
 
-.post-links > .col-sm-12 > ul > a >i {
+.post-links > .col-sm-12 > ul > a  {
 	padding: 0px;
 	font-size: 14px;
 	margin: 0px;
-	color: black;
 }
 
-.post-body {
-	width: 100%;
-	font-size: 12px;
-	float: left;
-	padding: 5px;
-	margin: 0px;
-}
+
 
 @media (max-width: 768px) {
 	.post-body > .pull-left > h3 {
@@ -183,10 +215,6 @@ hr {
 	}
 }
 
-.post-image .hover { 
-    position: absolute;
-    z-index: 2;
-}
 
 .form-control {
 	margin-bottom: 5px;
@@ -200,6 +228,17 @@ hr {
 	.post-container > ul {
 		display: none;
 	}
+}
+
+#email-button {
+	background-color: black;
+	color: white;
+	padding-left: 3px;
+	padding-right: 3px;
+	font-family: Lato;
+	font-size: 20px;
+	letter-spacing: 5px;
+	margin-right: 10px;
 }
 
 
